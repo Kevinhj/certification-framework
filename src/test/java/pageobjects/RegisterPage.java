@@ -1,9 +1,9 @@
 package pageobjects;
 
-import okhttp3.internal.http.RetryAndFollowUpInterceptor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import com.github.javafaker.Faker;
 
 public class RegisterPage extends BasePage {
 
@@ -16,7 +16,6 @@ public class RegisterPage extends BasePage {
     private By privacyPolicyCheckBox = By.xpath("//input[@type='checkbox']");
     private By submitButton = By.xpath("//input[@value='Continue']");
     private By accountCreatedContainer = By.xpath("//*[@id='content']/h1");
-
 
     public RegisterPage(WebDriver driver, String url){
         super(driver, url + "index.php?route=account/register");
@@ -54,18 +53,27 @@ public class RegisterPage extends BasePage {
         return driver.findElement(this.submitButton);
     }
 
+    public WebElement getAccountCreated(){
+        return driver.findElement(this.accountCreatedContainer);
+    }
+
     public String getAccountCreatedMessage(){
         return driver.findElement(this.accountCreatedContainer).getText();
     }
 
-    public void createCustomer(String firstName, String lastName, String email, String phone, String password, String passwordConfirmation){
+    public void createCustomer(String firstName, String lastName, String phone, String password, String passwordConfirmation){
         this.getFirstNameTextBox().sendKeys(firstName);
         this.getLastNameTextBox().sendKeys(lastName);
-        this.getEmailTextBox().sendKeys(email);
+        this.getEmailTextBox().sendKeys(randomEmail());
         this.getPhoneTextBox().sendKeys(phone);
         this.getPasswordTextBox().sendKeys(password);
         this.getPasswordConfirmationTextBox().sendKeys(passwordConfirmation);
         this.getPrivatePolicyCheckBox().click();
         this.getSubmitButton().click();
+    }
+
+    public static String randomEmail() {
+        Faker faker = new Faker();
+        return faker.internet().emailAddress();
     }
 }

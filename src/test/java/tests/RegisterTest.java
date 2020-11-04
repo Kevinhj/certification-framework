@@ -1,8 +1,11 @@
 package tests;
 
+import dataproviders.CustomersDataProviders;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageobjects.RegisterPage;
+import pojo.CustomerData;
+import utilities.Waits;
 
 public class RegisterTest extends BaseTest {
 
@@ -11,14 +14,15 @@ public class RegisterTest extends BaseTest {
         super("Chrome");
     }
 
-    @Test(groups = {"regression"})
-    public void testCreateCustomer() throws InterruptedException {
+    @Test(groups = { "regression" }, dataProvider = "getCustomerDataFromJson", dataProviderClass = CustomersDataProviders.class)
+    public void testCreateCustomer(CustomerData _customerData) {
         RegisterPage register = new RegisterPage(driver, getBaseUrl());
         register.goToPage();
-        register.createCustomer("Kev","Test", "kevinandres.hernandez.jimenez@ucreativa.com",
-                "8005541965","test12345", "test12345");
+        register.createCustomer(_customerData.getFistName(), _customerData.getLastName(),
+                _customerData.getPhone(), _customerData.getPassword(), _customerData.getPasswordConfirmation());
 
-        Thread.sleep(5000);
+        Waits wait = new Waits(driver);
+        wait.untilElementExists(register.getAccountCreated());
         Assert.assertEquals(register.getAccountCreatedMessage(), "Your Account Has Been Created!");
     }
 }
