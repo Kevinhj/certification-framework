@@ -12,6 +12,10 @@ public class BasePage {
         this.url = url;
     }
 
+    public BasePage(WebDriver driver){
+        this.driver = driver;
+    }
+
     public void goToPage(){
         driver.get(this.url);
     }
