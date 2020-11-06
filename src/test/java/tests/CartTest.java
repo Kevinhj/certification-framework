@@ -35,6 +35,7 @@ public class CartTest extends BaseTest{
         Assert.assertEquals(product.getSuccessModalText(), "Success: You have added " + _product.getName() + " to your shopping cart!×");
 
         product.goToCheckout();
+        wait.untilElementExists(checkout.getCheckoutButton());
         checkout.doCheckout();
         Assert.assertEquals(checkout.getFailCheckoutModalText(), "Products marked with *** are not available in the desired quantity or not in stock!×");
     }

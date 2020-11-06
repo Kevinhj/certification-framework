@@ -19,6 +19,11 @@ public class Waits {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    public void waitForElementToBeClickable(WebElement element){
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
     public boolean waitForJSandJQueryToLoad() {
 
         WebDriverWait wait = new WebDriverWait(driver, 30);

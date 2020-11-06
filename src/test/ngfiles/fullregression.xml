@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite  name="FullRegressionSuite">
+
+    <test name="Execute All Regression Tests">
+        <groups>
+            <run>
+                <include name="regression" />
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.RegisterTest"></class>
+            <class name="tests.CartTest"></class>
+            <class name="tests.ProductTest"></class>
+        </classes>
+    </test>
+</suite>
